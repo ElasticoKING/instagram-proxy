@@ -3,15 +3,19 @@ export default async function handler(req, res) {
     res.setHeader('Cache-Control', 'no-store');
     try {
         const response = await fetch(
-            'https://www.instagram.com/web/search/topsearch/?query=elasticoarts',
-            { headers: { 'User-Agent': 'Mozilla/5.0', 'Accept': 'application/json' } }
+            'https://i.instagram.com/api/v1/users/web_profile_info/?username=elasticoarts',
+            {
+                headers: {
+                    'User-Agent': 'Instagram 76.0.0.15.395 Android',
+                    'Accept': '*/*',
+                    'x-ig-app-id': '936619743392459'
+                }
+            }
         );
         const data = await response.json();
-        const user = data?.users?.find(u => 
-            u.user.username.toLowerCase() === 'elasticoarts'
-        );
-        if (user) {
-            res.json({ followers: user.user.follower_count });
+        const count = data?.data?.user?.edge_followed_by?.count;
+        if (count !== undefined) {
+            res.json({ followers: count });
         } else {
             res.json({ followers: null });
         }
