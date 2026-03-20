@@ -1,7 +1,1 @@
-{
-    "functions": {
-        "api/followers.js": {
-            "runtime": "edge"
-        }
-    }
-}
+{}
